@@ -12,16 +12,17 @@ import com.meajireview.meajireview_android.R;
  */
 
 public class SplashActivity extends Activity {
-    int SPLASH_TIME=1000;
+    int SPLASH_TIME=3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        new Handler().postDelayed(new Runnable() {
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
             @Override
             public void run() {
-                overridePendingTransition(0, android.R.anim.fade_in);
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 finish();
             }
         }, SPLASH_TIME);
