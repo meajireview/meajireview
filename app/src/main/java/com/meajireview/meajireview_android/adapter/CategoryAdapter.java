@@ -1,6 +1,7 @@
 package com.meajireview.meajireview_android.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
+import com.meajireview.meajireview_android.activity.ShopDetailActivity;
 import com.meajireview.meajireview_android.item.CategoryItem;
 
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ public class CategoryAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, item.getCategory(), Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context.getApplicationContext(), ShopDetailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
     }
