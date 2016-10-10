@@ -22,11 +22,14 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity {
 
+
+
     RecyclerView recyclerView;
     ArrayList<CategoryItem> items= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        startActivity(new Intent(this, SplashActivity.class));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
