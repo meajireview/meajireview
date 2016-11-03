@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
     android:background="@color/colorSecond">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.38" />
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="center"/>
 
-    <TextView
-        android:text="Splash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash ImageSplash Image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_weight="0.38" />
-
-</LinearLayout>
+</FrameLayout>

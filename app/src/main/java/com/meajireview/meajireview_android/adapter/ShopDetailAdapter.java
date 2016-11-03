@@ -2,6 +2,7 @@ package com.meajireview.meajireview_android.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,9 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
             ((ViewHeader)holder).txtOpen.setText(shopHeader.getOpen());
             ((ViewHeader)holder).txtDelivery.setText(shopHeader.getDelivery());
             ((ViewHeader)holder).txtRating.setText(shopHeader.getRating());
+            ((ViewHeader)holder).txtPhoneNum.setText(shopHeader.getPhoneNum());
+            ((ViewHeader)holder).txtMyReview.setText(Html.fromHtml("<u>" + "리뷰를 남겨주세요." + "</u>"));
+
         }else{
             ((ViewHolder)holder).txtFood.setText(shopItems.get(position-1).getFood());
             ((ViewHolder)holder).txtPrice.setText(shopItems.get(position-1).getPrice());
@@ -77,12 +81,14 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
     }
 
     public class ViewHeader extends RecyclerView.ViewHolder{
-        TextView txtOpen, txtDelivery, txtRating;
+        TextView txtOpen, txtDelivery, txtRating, txtPhoneNum, txtMyReview;
         public ViewHeader(View itemView) {
             super(itemView);
             txtOpen = (TextView)itemView.findViewById(R.id.txtOpen);
             txtDelivery = (TextView)itemView.findViewById(R.id.txtDelivery);
             txtRating = (TextView)itemView.findViewById(R.id.txtRating);
+            txtPhoneNum = (TextView)itemView.findViewById(R.id.txtPhoneNum);
+            txtMyReview = (TextView)itemView.findViewById(R.id.txtMyReview);
         }
     }
 }

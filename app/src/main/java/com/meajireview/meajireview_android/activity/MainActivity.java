@@ -1,6 +1,7 @@
 package com.meajireview.meajireview_android.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("매지리뷰");
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BMJUA_ttf.ttf");
 
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));

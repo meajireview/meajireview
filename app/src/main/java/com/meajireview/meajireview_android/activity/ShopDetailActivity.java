@@ -1,5 +1,7 @@
 package com.meajireview.meajireview_android.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -42,7 +44,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        shopHeader = new ShopHeader("10:00 ~ 20:00","안함","4.5");
+        shopHeader = new ShopHeader("10:00 ~ 20:00","안함","4.5","033-766-3373");
 
         for(int i=0;i<11;i++){
             shopItems.add(new ShopItem("치닭삼","6000원"));
@@ -59,13 +61,14 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        collapsingToolbar.setTitle("ShopDetail");
+        collapsingToolbar.setTitle("둘로스돈까스");
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.fabCall){
-            Toast.makeText(this, "전화번호 받고 intent 해야함.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", "010-2016-2689", null));
+            startActivity(intent);
         }
     }
 }

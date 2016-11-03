@@ -2,6 +2,7 @@ package com.meajireview.meajireview_android.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,6 +41,10 @@ public class CategoryAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final CategoryItem item = items.get(position);
         ((ViewHolder)holder).txtCategory.setText(item.getCategory());
+
+        Typeface typeFace = Typeface.createFromAsset(context.getAssets(), "fonts/BMJUA_ttf.ttf");
+        ((ViewHolder)holder).txtCategory.setTypeface(typeFace);
+
         ((ViewHolder)holder).container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
