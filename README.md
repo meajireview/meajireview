@@ -1,6 +1,13 @@
 # meajireview
  Made By Kang Seok yun, Choi su jin, Song Myeong ho.
  
+ color
+------------------
+ - colorPrimary : #33231B
+ - colorPrimaryDark : #231813
+ - colorAccent : #F44336
+ - colorSecond : #F5F0DC
+ 
  Build
 ------------------
   - minSdkVersion 15
