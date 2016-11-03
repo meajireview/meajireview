@@ -7,8 +7,8 @@
  - colorPrimaryDark : #231813
  - colorAccent : #F44336
  - colorSecond : #F5F0DC
-
-
+  
+  
  Build
 ------------------
   - minSdkVersion 15
