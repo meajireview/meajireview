@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.activity.ShopDetailActivity;
+import com.meajireview.meajireview_android.activity.ShopListActivity;
 import com.meajireview.meajireview_android.item.CategoryItem;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, item.getCategory(), Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(context.getApplicationContext(), ShopDetailActivity.class);
+                Intent intent=new Intent(context.getApplicationContext(), ShopListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

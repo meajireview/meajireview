@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  */
 
 public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener {
-    @BindView (R.id.toolBar) Toolbar toolbar;
+    @BindView(R.id.toolBar) Toolbar toolbar;
     @BindView(R.id.collapsingToolbar) CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.fabCall)  FloatingActionButton fabCall;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
