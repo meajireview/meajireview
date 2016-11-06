@@ -19,7 +19,6 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        ImageView imgLogo = (ImageView)findViewById(R.id.imgLogo);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
