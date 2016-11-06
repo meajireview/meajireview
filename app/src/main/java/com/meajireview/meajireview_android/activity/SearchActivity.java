@@ -13,16 +13,27 @@ import android.view.inputmethod.EditorInfo;
 
 import com.meajireview.meajireview_android.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by songmho on 2016-10-09.
  */
 public class SearchActivity extends AppCompatActivity {
+    @BindView(R.id.toolBar) Toolbar toolbar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolBar);
+        ButterKnife.bind(this);
 
+        initToolbar();
+    }
+
+    /**
+     * Toolbar초기화 메소드 <br>
+     */
+    private void initToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

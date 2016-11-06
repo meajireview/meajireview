@@ -62,7 +62,7 @@ public class CategoryAdapter extends RecyclerView.Adapter {
     }
 
     /**
-     * ViewHolder class
+     * 카테고리 리스트의 item 관련 class
      *
      */
     public class ViewHolder extends RecyclerView.ViewHolder{

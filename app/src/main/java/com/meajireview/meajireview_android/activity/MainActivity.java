@@ -17,28 +17,41 @@ import com.meajireview.meajireview_android.item.CategoryItem;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * MainActivity<br>
  *   메인페이지
  */
 public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.toolBar) Toolbar toolbar;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
-
-
-    RecyclerView recyclerView;
-    ArrayList<CategoryItem> items= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolBar);
+        initToolbar();
+        makeList();
+    }
+
+    /**
+     * toolbar 초기화 메소드<br>
+     */
+    private void initToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("매지리뷰");
-        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BMJUA_ttf.ttf");
+    }
 
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+    /**
+     * 그리드리스트 생성 메소드<br>
+     */
+    private void makeList() {
+        ArrayList<CategoryItem> items= new ArrayList<>();
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         items.add(new CategoryItem("즐겨찾기"));

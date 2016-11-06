@@ -71,6 +71,9 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
         return shopItems.size()+1;
     }
 
+    /**
+     * 가게 상세 액티비티에서 메뉴와 가격 item관련 class <br>
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtFood, txtPrice;
         public ViewHolder(View itemView) {
@@ -80,6 +83,9 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
         }
     }
 
+    /**
+     * 가게 상세 액티비티에서 가게 정보 관련 class <br>
+     */
     public class ViewHeader extends RecyclerView.ViewHolder{
         TextView txtOpen, txtDelivery, txtRating, txtPhoneNum, txtMyReview;
         public ViewHeader(View itemView) {
