@@ -2,19 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container">
+    android:id="@+id/container"
+    android:paddingLeft="4dp">
 
     <TextView
+        android:paddingTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/shopName"/>
+        android:id="@+id/shopName"
+        android:textSize="16dp"
+        android:gravity="center_vertical"
+        android:layout_weight="3"/>
     <TextView
+        android:paddingTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/shopCall"/>
+        android:id="@+id/shopCall"
+        android:textSize="12dp"
+        android:layout_weight="2"/>
     <TextView
+        android:paddingTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/shopRating"/>
+        android:id="@+id/shopRating"
+        android:textSize="12dp"
+        android:layout_weight="2"/>
+
 
 </LinearLayout>
