@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_user"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/favorite"
+            android:icon="@drawable/ic_setting"
+            android:title="@string/menu_favorite" />
+    </group>
+    <group
+        android:id="@+id/group_setup"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/setup"
+            android:icon="@drawable/ic_setting"
+            android:title="@string/menu_settings" />
+    </group>
+    <group
+        android:id="@+id/group_team"
+        android:checkableBehavior="single">
+    </group>
+</menu>

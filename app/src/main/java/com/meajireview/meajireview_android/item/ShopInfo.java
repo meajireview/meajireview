@@ -5,10 +5,14 @@ package com.meajireview.meajireview_android.item;
  */
 
 public class ShopInfo {
-
+    int shopId;
     String shopName;
     String shopCall;
     String shopRating;
+
+    public int getShopId() {
+        return shopId;
+    }
 
     public String getShopName()
     {
@@ -25,8 +29,9 @@ public class ShopInfo {
         return shopRating;
     }
 
-    public ShopInfo(String shopName, String shopCall, String shopRating)
+    public ShopInfo(int shopId, String shopName, String shopCall, String shopRating)
     {
+        this.shopId = shopId;
         this.shopName = shopName;
         this.shopCall = shopCall;
         this.shopRating = shopRating;

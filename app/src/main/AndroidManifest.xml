@@ -24,7 +24,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity"/>
+                android:value=".activity.ShopListActivity"/>
         </activity>
 
         <activity android:name=".activity.ShopListActivity"

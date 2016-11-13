@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.activity.ShopDetailActivity;
-import com.meajireview.meajireview_android.activity.ShopListActivity;
 import com.meajireview.meajireview_android.item.ShopInfo;
 
 import java.util.ArrayList;
@@ -50,6 +49,10 @@ public class ShopListAdapter extends RecyclerView.Adapter {
             public void onClick (View v)
             {
                 Intent intent = new Intent(context.getApplicationContext(), ShopDetailActivity.class);
+                intent.putExtra("shopId",info.getShopId());
+                intent.putExtra("shop",info.getShopName());
+                intent.putExtra("phone",info.getShopCall());
+                intent.putExtra("rating",info.getShopRating());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

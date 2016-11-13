@@ -3,6 +3,7 @@ package com.meajireview.meajireview_android.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
         }else{
             ((ViewHolder)holder).txtFood.setText(shopItems.get(position-1).getFood());
             ((ViewHolder)holder).txtPrice.setText(shopItems.get(position-1).getPrice());
+            Log.e("asdfdsaf",shopItems.get(position-1).getPrice());
         }
     }
 

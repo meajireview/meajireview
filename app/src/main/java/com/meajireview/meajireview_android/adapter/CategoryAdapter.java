@@ -5,14 +5,16 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
-import com.meajireview.meajireview_android.activity.ShopDetailActivity;
 import com.meajireview.meajireview_android.activity.ShopListActivity;
 import com.meajireview.meajireview_android.item.CategoryItem;
 
@@ -49,8 +51,8 @@ public class CategoryAdapter extends RecyclerView.Adapter {
         ((ViewHolder)holder).container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, item.getCategory(), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(context.getApplicationContext(), ShopListActivity.class);
+                intent.putExtra("category",""+item.getCategory());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -68,11 +70,11 @@ public class CategoryAdapter extends RecyclerView.Adapter {
      */
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtCategory;
-        CardView container;
+        FrameLayout container;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            container = (CardView)itemView.findViewById(R.id.container);
+            container = (FrameLayout)itemView.findViewById(R.id.container);
             txtCategory = (TextView)itemView.findViewById(R.id.txtCategory);
         }
     }

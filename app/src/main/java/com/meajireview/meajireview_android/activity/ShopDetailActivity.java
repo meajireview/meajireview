@@ -1,6 +1,8 @@
 package com.meajireview.meajireview_android.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.view.View;
 
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.adapter.ShopDetailAdapter;
+import com.meajireview.meajireview_android.item.CategoryItem;
 import com.meajireview.meajireview_android.item.ShopHeader;
 import com.meajireview.meajireview_android.item.ShopItem;
 
@@ -33,6 +36,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     @BindView(R.id.fabCall)  FloatingActionButton fabCall;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,10 +62,25 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        ShopHeader shopHeader = new ShopHeader("10:00 ~ 20:00","안함","4.5","033-766-3373");
+        ShopHeader shopHeader;
+        if(getIntent()!=null)
+            shopHeader = new ShopHeader(getIntent().getStringExtra("shop"),"안함",
+                getIntent().getStringExtra("rating"),getIntent().getStringExtra("phone"));
+        else
+            shopHeader = new ShopHeader("","","","");
 
-        for(int i=0;i<11;i++)                          //나중에 db에서 가져올 때 변경 필요.
-            shopItems.add(new ShopItem("치닭삼","6000원"));
+        db = SplashActivity.sqliteHelper.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("select name, price from Menu where shop_id ="+getIntent().getIntExtra("shopId",-1), null);
+            while (cursor.moveToNext())
+                shopItems.add(new ShopItem(cursor.getString(0),cursor.getInt(1)+"원"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) cursor.close();
+        }
 
         recyclerView.setAdapter(new ShopDetailAdapter(getApplicationContext(),shopHeader,shopItems));
     }
@@ -73,13 +92,14 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        collapsingToolbar.setTitle("둘로스돈까스");       //전의 목록에서 get Intent로 받아와야
+        if(getIntent().getStringExtra("shop")!=null)
+            collapsingToolbar.setTitle(getIntent().getStringExtra("shop"));       //전의 목록에서 get Intent로 받아와야
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.fabCall){
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", "010-2016-2689", null));
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", getIntent().getStringExtra("phone"), null));
             startActivity(intent);
         }
     }

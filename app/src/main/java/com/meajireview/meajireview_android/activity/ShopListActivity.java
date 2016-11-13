@@ -1,5 +1,7 @@
 package com.meajireview.meajireview_android.activity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.adapter.ShopListAdapter;
+import com.meajireview.meajireview_android.item.CategoryItem;
 import com.meajireview.meajireview_android.item.ShopInfo;
 
 import java.util.ArrayList;
@@ -21,10 +24,11 @@ import butterknife.ButterKnife;
  */
 
 public class ShopListActivity extends AppCompatActivity {
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolBar) Toolbar toolBar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
-
+    SQLiteDatabase db;
+    String category;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,31 +36,53 @@ public class ShopListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initToolbar();
+        initRecyclerView();
 
-        makeContext();
-
+        makeList();
     }
 
-    private void makeContext()
-    {
-        ArrayList<ShopInfo> shopInfos = new ArrayList<>();
-
+    /**
+     * RecyclerView 초기화 메소드<br>
+     */
+    private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+    }
 
-        for(int i=0;i<9;i++)
-        {
-            shopInfos.add(new ShopInfo("둘로스 돈까스", "033-766-3373", "4.5"));
+    /**
+     * List 생성 메소드 <br>
+     */
+    private void makeList() {
+        ArrayList<ShopInfo> shopInfos = new ArrayList<>();
+
+        db = SplashActivity.sqliteHelper.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("select id, name, phone from Shop where category_name='"+category+"'", null);
+            while (cursor.moveToNext())
+                shopInfos.add(new ShopInfo(cursor.getInt(0), cursor.getString(1),cursor.getString(2),"4.5"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) cursor.close();
         }
 
         recyclerView.setAdapter(new ShopListAdapter(getApplicationContext(), shopInfos));
     }
 
+    /**
+     * Toolbar 초기화 메소드<br>
+     */
     private void initToolbar()
     {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setSupportActionBar(toolBar);
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getIntent().getStringExtra("category")!=null) {
+            category = getIntent().getStringExtra("category");
+            getSupportActionBar().setTitle(category);
+        }
     }
 }
