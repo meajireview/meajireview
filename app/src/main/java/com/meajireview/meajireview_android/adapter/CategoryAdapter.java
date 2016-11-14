@@ -3,18 +3,16 @@ package com.meajireview.meajireview_android.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
+import com.meajireview.meajireview_android.activity.RecommendActivity;
 import com.meajireview.meajireview_android.activity.ShopListActivity;
 import com.meajireview.meajireview_android.item.CategoryItem;
 
@@ -48,10 +46,41 @@ public class CategoryAdapter extends RecyclerView.Adapter {
         Typeface typeFace = Typeface.createFromAsset(context.getAssets(), "fonts/BMJUA_ttf.ttf");
         ((ViewHolder)holder).txtCategory.setTypeface(typeFace);
 
+        switch (item.getCategory()){
+            case "밥":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.rice);
+                break;
+            case "중식":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.chiness);
+                break;
+            case "양식":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.western);
+                break;
+            case "치킨":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.chicken);
+                break;
+            case "야식":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.night);
+                break;
+            case "카페":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.cafe);
+                break;
+            case "술집":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.alcohol);
+                break;
+            case "랜덤":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.random);
+                break;
+        }
+
         ((ViewHolder)holder).container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context.getApplicationContext(), ShopListActivity.class);
+                Intent intent;
+                if(item.getCategory().equals("랜덤") || item.getCategory().equals("추천"))
+                    intent=new Intent(context.getApplicationContext(), RecommendActivity.class);
+                else
+                    intent=new Intent(context.getApplicationContext(), ShopListActivity.class);
                 intent.putExtra("category",""+item.getCategory());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -71,9 +100,11 @@ public class CategoryAdapter extends RecyclerView.Adapter {
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtCategory;
         FrameLayout container;
+        ImageView imageIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            imageIcon = (ImageView)itemView.findViewById(R.id.icon);
             container = (FrameLayout)itemView.findViewById(R.id.container);
             txtCategory = (TextView)itemView.findViewById(R.id.txtCategory);
         }

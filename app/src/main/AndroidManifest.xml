@@ -11,6 +11,12 @@
 
         <activity android:name=".activity.MainActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RecommendActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity"/>
+        </activity>
 
         <activity android:name=".activity.SearchActivity"
             android:windowSoftInputMode="adjustResize"

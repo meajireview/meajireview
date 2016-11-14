@@ -91,15 +91,6 @@ public class MainActivity extends AppCompatActivity {
             if (cursor != null) cursor.close();
         }
 
-      /*  items.add(new CategoryItem("밥"));
-        items.add(new CategoryItem("중식"));
-        items.add(new CategoryItem("양식"));
-        items.add(new CategoryItem("치킨"));
-        items.add(new CategoryItem("야식"));
-        items.add(new CategoryItem("카페"));
-        items.add(new CategoryItem("술집"));
-        items.add(new CategoryItem("랜덤"));
-*/
         makeDrawerHeader();
         recyclerView.setAdapter(new CategoryAdapter(getApplicationContext(),items));
     }
