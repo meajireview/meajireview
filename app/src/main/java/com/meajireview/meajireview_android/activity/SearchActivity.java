@@ -67,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
 
                         //SQL문에서 query를 실행한 결과 넣어두어야 함.
                         for(int i=0;i<9;i++) {
-                            shopInfos.add(new ShopInfo(0,"둘로스 돈까스", "033-766-3373", "4.5"));
+                            shopInfos.add(new ShopInfo(0,"둘로스 돈까스", "033-766-3373", "4.5","adsf"));
                         }
 
                         recyclerView.setAdapter(new ShopListAdapter(getApplicationContext(), shopInfos));

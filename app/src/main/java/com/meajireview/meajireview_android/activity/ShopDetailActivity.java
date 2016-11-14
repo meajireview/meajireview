@@ -12,7 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.adapter.ShopDetailAdapter;
@@ -64,7 +67,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
         ShopHeader shopHeader;
         if(getIntent()!=null)
-            shopHeader = new ShopHeader(getIntent().getStringExtra("shop"),"안함",
+            shopHeader = new ShopHeader(getIntent().getStringExtra("open"),"안함",
                 getIntent().getStringExtra("rating"),getIntent().getStringExtra("phone"));
         else
             shopHeader = new ShopHeader("","","","");
@@ -85,6 +88,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         recyclerView.setAdapter(new ShopDetailAdapter(getApplicationContext(),shopHeader,shopItems));
     }
 
+
     /**
      * Toolbar 초기화 메소드 <br>
      */
@@ -94,6 +98,13 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
         if(getIntent().getStringExtra("shop")!=null)
             collapsingToolbar.setTitle(getIntent().getStringExtra("shop"));       //전의 목록에서 get Intent로 받아와야
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -102,5 +113,26 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", getIntent().getStringExtra("phone"), null));
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_favorite,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_favorite){
+            Toast.makeText(ShopDetailActivity.this, "즐겨찾기", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -27,7 +27,7 @@ public class ShopListActivity extends AppCompatActivity {
     @BindView(R.id.toolBar) Toolbar toolBar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
-    SQLiteDatabase db;
+    public SQLiteDatabase db;
     String category;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,9 +59,9 @@ public class ShopListActivity extends AppCompatActivity {
         db = SplashActivity.sqliteHelper.getReadableDatabase();
         Cursor cursor = null;
         try {
-            cursor = db.rawQuery("select id, name, phone from Shop where category_name='"+category+"'", null);
+            cursor = db.rawQuery("select id, name, phone, open from Shop where category_name='"+category+"'", null);
             while (cursor.moveToNext())
-                shopInfos.add(new ShopInfo(cursor.getInt(0), cursor.getString(1),cursor.getString(2),"4.5"));
+                shopInfos.add(new ShopInfo(cursor.getInt(0), cursor.getString(1),cursor.getString(2),"4.5",cursor.getString(3)));
         }
         catch (Exception e){
             e.printStackTrace();

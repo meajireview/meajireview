@@ -2,15 +2,22 @@ package com.meajireview.meajireview_android.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
+import com.meajireview.meajireview_android.activity.MainActivity;
 import com.meajireview.meajireview_android.activity.ShopDetailActivity;
+import com.meajireview.meajireview_android.activity.ShopListActivity;
+import com.meajireview.meajireview_android.activity.SplashActivity;
 import com.meajireview.meajireview_android.item.ShopInfo;
 
 import java.util.ArrayList;
@@ -37,12 +44,18 @@ public class ShopListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position)
     {
         final ShopInfo info = shopInfos.get(position);
         ((ViewHolder)holder).shopName.setText(info.getShopName());
         ((ViewHolder)holder).shopCall.setText(info.getShopCall());
         ((ViewHolder)holder).shopRating.setText(info.getShopRating());
+        ((ViewHolder)holder).btFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(((ViewHolder)holder).container,"추가되었습니다.",Snackbar.LENGTH_LONG).show();
+            }
+        });
 
         ((ViewHolder)holder).container.setOnClickListener(new View.OnClickListener()
         {
@@ -51,6 +64,7 @@ public class ShopListAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context.getApplicationContext(), ShopDetailActivity.class);
                 intent.putExtra("shopId",info.getShopId());
                 intent.putExtra("shop",info.getShopName());
+                intent.putExtra("open",info.getShopOpen());
                 intent.putExtra("phone",info.getShopCall());
                 intent.putExtra("rating",info.getShopRating());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -67,14 +81,16 @@ public class ShopListAdapter extends RecyclerView.Adapter {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView shopName, shopCall, shopRating;
-        LinearLayout container;
+        FrameLayout container;
+        Button btFavorite;
 
         public ViewHolder(View infoView) {
             super(infoView);
             shopName = (TextView) infoView.findViewById(R.id.shopName);
             shopCall = (TextView) infoView.findViewById(R.id.shopCall);
             shopRating = (TextView) infoView.findViewById(R.id.shopRating);
-            container = (LinearLayout) infoView.findViewById(R.id.container);
+            container = (FrameLayout) infoView.findViewById(R.id.container);
+            btFavorite = (Button) infoView.findViewById(R.id.btFavorite);
         }
     }
 }

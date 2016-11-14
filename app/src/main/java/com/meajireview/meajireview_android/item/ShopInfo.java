@@ -9,6 +9,11 @@ public class ShopInfo {
     String shopName;
     String shopCall;
     String shopRating;
+    String shopOpen;
+
+    public String getShopOpen() {
+        return shopOpen;
+    }
 
     public int getShopId() {
         return shopId;
@@ -29,11 +34,12 @@ public class ShopInfo {
         return shopRating;
     }
 
-    public ShopInfo(int shopId, String shopName, String shopCall, String shopRating)
+    public ShopInfo(int shopId, String shopName, String shopCall, String shopRating, String shopOpen)
     {
         this.shopId = shopId;
         this.shopName = shopName;
         this.shopCall = shopCall;
         this.shopRating = shopRating;
+        this.shopOpen = shopOpen;
     }
 }
