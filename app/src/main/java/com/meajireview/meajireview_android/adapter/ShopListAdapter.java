@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ public class ShopListAdapter extends RecyclerView.Adapter {
 
     Context context;
     ArrayList<ShopInfo> shopInfos;
+    Boolean isFavorite = false;
 
     public ShopListAdapter (Context context, ArrayList<ShopInfo> shopInfos)
     {
@@ -53,7 +56,14 @@ public class ShopListAdapter extends RecyclerView.Adapter {
         ((ViewHolder)holder).btFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(((ViewHolder)holder).container,"추가되었습니다.",Snackbar.LENGTH_LONG).show();
+                if(isFavorite) {
+                    ((ViewHolder) holder).btFavorite.setBackgroundResource(R.drawable.heart);
+                    Snackbar.make(((ViewHolder) holder).container, "추가되었습니다.", Snackbar.LENGTH_LONG).show();
+                }
+                else{
+                    ((ViewHolder) holder).btFavorite.setBackgroundResource(R.drawable.unheart);
+                    Snackbar.make(((ViewHolder) holder).container, "제거되었습니다.", Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 

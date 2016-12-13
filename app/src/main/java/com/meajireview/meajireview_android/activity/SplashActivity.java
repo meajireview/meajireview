@@ -6,8 +6,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.SqliteHelper;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 /**
  * Created by TOMO on 2016-10-07.
@@ -36,6 +44,42 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }, SPLASH_TIME);
+    }
+
+    private void insertDataBase() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Shop");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                int i= 1;
+                String sql8 = null;
+                Log.e("123",""+list.size());
+                for(ParseObject o : list){
+                    Log.e(""+i,""+o.getString("name"));
+                    if(o.getBoolean("isdelivery"))
+                    sql8 = "insert into Shop (ID,name,phone,delivery,open,category_name) values ("+i+",'"+o.getString("name")+
+                            "', '"+o.getString("phone")+"',1,'10:30~20:00','"+o.getString("category_name")+"');";
+                    else
+                        sql8 = "insert into Shop (ID,name,phone,delivery,open,category_name) values ("+i+",'"+o.getString("name")+
+                                "', '"+o.getString("phone")+"',0,'10:30~20:00','"+o.getString("category_name")+"');";
+                    db.execSQL(sql8);
+                    i++;
+                }
+            }
+        });
+
+        query = ParseQuery.getQuery("Menu");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+
+                Log.e("123",""+list.size());
+                for(ParseObject o : list){
+                    String sql8 = "insert into Menu (name, price,shop_id) values ('"+o.getString("name")+"', "+o.getInt("price")+", "+ o.getInt("shop_id")+");";
+                    db.execSQL(sql8);
+                }
+            }
+        });
     }
 
     private void initDataBase() {
@@ -82,25 +126,8 @@ public class SplashActivity extends AppCompatActivity {
                     "values (7,'랜덤');";
 
             db.execSQL(sql7);
-            String sql8 = "insert into Shop (ID,name,phone,delivery,open,category_name) values (1,'맛존', '033-000-0000',1,'10:30~20:00','밥');";
-            db.execSQL(sql8);
-            String sql9 = "insert into Shop (ID,name,phone,delivery,open,category_name) values (2 ,'둘로스 돈까스', '033-000-0000',0,'10:30~20:00','양식');";
-            db.execSQL(sql9);
-            String sql10 = "insert into Shop (ID,name,phone,delivery,open,category_name) values (3 ,'BnC', '033-000-0000',1,'10:30~20:00','치킨');";
-            db.execSQL(sql10);
-            sql10 = "insert into Menu (name, price, shop_id) values ('김치찌개',5000, 1);";
-            db.execSQL(sql10);
-            sql10 = "insert into Menu (name, price, shop_id) values ('된장찌개',5000, 1);";
-            db.execSQL(sql10);
-            sql10 = "insert into Menu (name, price, shop_id) values ('두부찌개',5000, 2);";
-            db.execSQL(sql10);
-            sql10 = "insert into Menu (name, price, shop_id) values ('얼큰순두부',5000, 2);";
-            db.execSQL(sql10);
-            sql10 = "insert into Menu (name, price, shop_id) values ('두부찌개',5000, 3);";
-            db.execSQL(sql10);
-            sql10 = "insert into Menu (name, price, shop_id) values ('얼큰순두부',5000, 3);";
-            db.execSQL(sql10);
 
+            insertDataBase();
 
         }
     } catch (Exception e) {

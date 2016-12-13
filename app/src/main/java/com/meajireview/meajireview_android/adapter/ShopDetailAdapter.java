@@ -1,6 +1,7 @@
 package com.meajireview.meajireview_android.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.meajireview.meajireview_android.R;
+import com.meajireview.meajireview_android.activity.ReviewActivity;
 import com.meajireview.meajireview_android.item.ShopHeader;
 import com.meajireview.meajireview_android.item.ShopItem;
 
@@ -60,6 +62,14 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
             ((ViewHeader)holder).txtRating.setText(shopHeader.getRating());
             ((ViewHeader)holder).txtPhoneNum.setText(shopHeader.getPhoneNum());
             ((ViewHeader)holder).txtMyReview.setText(Html.fromHtml("<u>" + "리뷰를 남겨주세요." + "</u>"));
+            ((ViewHeader)holder).txtMyReview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ReviewActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
 
         }else{
             ((ViewHolder)holder).txtFood.setText(shopItems.get(position-1).getFood());

@@ -45,10 +45,11 @@
                 android:id="@+id/shopCall"/>
         </LinearLayout>
     </LinearLayout>
-    <Button
+    <CheckBox
         android:id="@+id/btFavorite"
         android:layout_width="42dp"
         android:layout_height="42dp"
+        android:button="@drawable/heart_change"
         android:layout_gravity="center|right"/>
     <View
         android:layout_width="match_parent"
