@@ -8,15 +8,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.activity.ReviewActivity;
 import com.meajireview.meajireview_android.item.ReviewItem;
 import com.meajireview.meajireview_android.item.ShopHeader;
 import com.meajireview.meajireview_android.item.ShopItem;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,13 +63,51 @@ public class ReviewAdapter extends RecyclerView.Adapter {
             return BODY;
     }
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof ReviewAdapter.ViewHeader){
-            ((ViewHeader)holder).ratingBar.setRating((float)3.5);
-            ((ViewHeader)holder).editContent.setHint("리뷰를 적어주세요!");
+            if(reviewHeader.getContent().length()==0 || reviewHeader.getContent()==null)
+                ((ViewHeader)holder).editContent.setHint("리뷰를 적어주세요!");
+            else
+                ((ViewHeader)holder).editContent.setText(reviewHeader.getContent());
+            if(reviewHeader.getRating()){
+                ((ViewHeader)holder).btRecommend.setChecked(true);
+            }else {
+                ((ViewHeader)holder).btUnRecommend.setChecked(true);
+            }
+
+            ((ViewHeader)holder).btInsert.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(((ViewHeader)holder).btRecommend.isChecked() && ((ViewHeader)holder).btUnRecommend.isChecked()){
+                        Toast.makeText(context, "추천/비추천을 해주세요.", Toast.LENGTH_SHORT).show();
+                    }else {
+
+                        if(((ViewHeader)holder).btRecommend.isChecked()){
+                            ParseObject object = null;
+                            object.put("reviewer", ParseUser.getCurrentUser().getUsername());
+                            object.put("shop_id", 1);
+                            object.put("contents", ((ViewHeader)holder).editContent.getText().toString());
+                            object.put("is_recommend",true);
+                            object.saveInBackground();
+                        }else {
+                            ParseObject object = null;
+                            object.put("reviewer", ParseUser.getCurrentUser().getUsername());
+                            object.put("shop_id", 1);
+                            object.put("contents", ((ViewHeader)holder).editContent.getText().toString());
+                            object.put("is_recommend",false);
+                            object.saveInBackground();
+                        }
+                    }
+                }
+            });
         }else{
-            ((ViewHolder)holder).txtRating.setText("3.0");
-            ((ViewHolder)holder).txtReview.setText("테스트 중입니다...");
+            ReviewItem curReviewItem = reviewItems.get(position-1);
+            if(curReviewItem.getRating()){
+                ((ViewHolder)holder).txtRating.setText("추천");
+            }else {
+                ((ViewHolder)holder).txtRating.setText("비추천");
+            }
+            ((ViewHolder)holder).txtReview.setText(curReviewItem.getContent());
         }
     }
 
@@ -83,12 +127,17 @@ public class ReviewAdapter extends RecyclerView.Adapter {
     }
 
     public class ViewHeader extends RecyclerView.ViewHolder {
-        RatingBar ratingBar;
         EditText editContent;
+        RadioButton btRecommend, btUnRecommend;
+        RadioGroup rdGroup;
+        Button btInsert;
         public ViewHeader(View v) {
             super(v);
-            ratingBar = (RatingBar)itemView.findViewById(R.id.ratingBar);
             editContent = (EditText)itemView.findViewById(R.id.editContent);
+            btInsert = (Button)itemView.findViewById(R.id.btInsert);
+            btRecommend = (RadioButton)itemView.findViewById(R.id.btRecommend);
+            btUnRecommend = (RadioButton)itemView.findViewById(R.id.btUnRecommend);
+            rdGroup = (RadioGroup)itemView.findViewById(R.id.rdGroup);
         }
     }
 }

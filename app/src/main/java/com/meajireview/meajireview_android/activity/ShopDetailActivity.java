@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.adapter.ShopDetailAdapter;
-import com.meajireview.meajireview_android.item.CategoryItem;
 import com.meajireview.meajireview_android.item.ShopHeader;
 import com.meajireview.meajireview_android.item.ShopItem;
 
@@ -67,10 +66,10 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
         ShopHeader shopHeader;
         if(getIntent()!=null)
-            shopHeader = new ShopHeader(getIntent().getStringExtra("open"),"안함",
-                getIntent().getStringExtra("rating"),getIntent().getStringExtra("phone"));
+            shopHeader = new ShopHeader(getIntent().getIntExtra("shopId",-1),getIntent().getStringExtra("open"),"안함",
+                getIntent().getStringExtra("rating"),getIntent().getStringExtra("phone"), "","");
         else
-            shopHeader = new ShopHeader("","","","");
+            shopHeader = new ShopHeader(-1, "", "", "", "", "", "");
 
         db = SplashActivity.sqliteHelper.getReadableDatabase();
         Cursor cursor = null;

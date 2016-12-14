@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.adapter.CategoryAdapter;
 import com.meajireview.meajireview_android.item.CategoryItem;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
@@ -32,8 +33,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolBar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
-    @BindView(R.id.navigationView) NavigationView navigationView;
-    @BindView(R.id.activity_main) DrawerLayout drawerLayout;
 
     SQLiteDatabase db;
 
@@ -46,13 +45,6 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         makeList();
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                return changeDrawerMenu(menuItem);
-            }
-        });
-
     }
 
     /**
@@ -61,14 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private void initToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("매지리뷰");
-
-        toolbar.setNavigationIcon(R.drawable.drawericon);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
     }
 
     /**
@@ -91,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             if (cursor != null) cursor.close();
         }
 
-        makeDrawerHeader();
+        items.add(new CategoryItem("설정"));
         recyclerView.setAdapter(new CategoryAdapter(getApplicationContext(),items));
     }
 
@@ -114,20 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return true;
-    }
-
-    /**
-     * 드로어 헤더 설정<br>
-     */
-    private void makeDrawerHeader() {
-        View headerLayout = navigationView.inflateHeaderView(R.layout.drawer_header);
-        headerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        TextView txtName = (TextView) headerLayout.findViewById(R.id.name);
     }
 
     @Override

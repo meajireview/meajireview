@@ -14,6 +14,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
         initDataBase();
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
 

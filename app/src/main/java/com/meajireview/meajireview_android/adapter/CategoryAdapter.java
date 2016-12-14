@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,18 @@ import android.widget.TextView;
 
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.activity.RecommendActivity;
+import com.meajireview.meajireview_android.activity.SetupActivity;
 import com.meajireview.meajireview_android.activity.ShopListActivity;
 import com.meajireview.meajireview_android.item.CategoryItem;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CategoryAdapter
@@ -79,8 +88,48 @@ public class CategoryAdapter extends RecyclerView.Adapter {
                 Intent intent;
                 if(item.getCategory().equals("랜덤") || item.getCategory().equals("추천"))
                     intent=new Intent(context.getApplicationContext(), RecommendActivity.class);
+                else if(item.getCategory().equals("설정"))
+                    intent = new Intent(context.getApplicationContext(), SetupActivity.class);
                 else
                     intent=new Intent(context.getApplicationContext(), ShopListActivity.class);
+
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Category");
+                query.whereEqualTo("name",item.getCategory());
+                query.getFirstInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject parseObject, ParseException e) {
+                        if(parseObject!=null){
+                        parseObject.increment("count",1);
+                        parseObject.saveInBackground();}
+                    }
+                });
+                if(ParseUser.getCurrentUser()!=null){
+                    switch (item.getCategory()){
+                        case "밥":
+                            ParseUser.getCurrentUser().increment("rice",1);
+                            break;
+                        case "중식":
+                            ParseUser.getCurrentUser().increment("chiness",1);
+                            break;
+                        case "양식":
+                            ParseUser.getCurrentUser().increment("western",1);
+                            break;
+                        case "치킨":
+                            ParseUser.getCurrentUser().increment("chicken",1);
+                            break;
+                        case "야식":
+                            ParseUser.getCurrentUser().increment("night",1);
+                            break;
+                        case "카페":
+                            ParseUser.getCurrentUser().increment("cafe",1);
+                            break;
+                        case "술집":
+                            ParseUser.getCurrentUser().increment("alcohole",1);
+                            break;
+                    }
+                    ParseUser.getCurrentUser().saveInBackground();
+                }
+
                 intent.putExtra("category",""+item.getCategory());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

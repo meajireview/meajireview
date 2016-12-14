@@ -61,11 +61,21 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
             ((ViewHeader)holder).txtDelivery.setText(shopHeader.getDelivery());
             ((ViewHeader)holder).txtRating.setText(shopHeader.getRating());
             ((ViewHeader)holder).txtPhoneNum.setText(shopHeader.getPhoneNum());
-            ((ViewHeader)holder).txtMyReview.setText(Html.fromHtml("<u>" + "리뷰를 남겨주세요." + "</u>"));
+            if(shopHeader.getMyContent().length()==0) {
+                ((ViewHeader) holder).txtMyReview.setText(Html.fromHtml("<u>" + "리뷰를 남겨주세요." + "</u>"));
+                ((ViewHeader) holder).txtRecommend.setText("");
+        }
+            else {
+                ((ViewHeader) holder).txtMyReview.setText(shopHeader.getMyContent());
+                ((ViewHeader) holder).txtRecommend.setText(shopHeader.getMyRecommend());
+            }
             ((ViewHeader)holder).txtMyReview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ReviewActivity.class);
+                    intent.putExtra("shopId",shopHeader.getShopId());
+                    intent.putExtra("myRecommend",shopHeader.getMyRecommend());
+                    intent.putExtra("myContent",shopHeader.getMyContent());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
@@ -99,7 +109,7 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
      * 가게 상세 액티비티에서 가게 정보 관련 class <br>
      */
     public class ViewHeader extends RecyclerView.ViewHolder{
-        TextView txtOpen, txtDelivery, txtRating, txtPhoneNum, txtMyReview;
+        TextView txtOpen, txtDelivery, txtRating, txtPhoneNum, txtMyReview, txtRecommend;
         public ViewHeader(View itemView) {
             super(itemView);
             txtOpen = (TextView)itemView.findViewById(R.id.txtOpen);
@@ -107,6 +117,7 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
             txtRating = (TextView)itemView.findViewById(R.id.txtRating);
             txtPhoneNum = (TextView)itemView.findViewById(R.id.txtPhoneNum);
             txtMyReview = (TextView)itemView.findViewById(R.id.txtMyReview);
+            txtRecommend = (TextView)itemView.findViewById(R.id.txtRecommend);
         }
     }
 }
