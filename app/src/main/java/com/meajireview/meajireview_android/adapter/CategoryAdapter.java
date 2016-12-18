@@ -80,6 +80,9 @@ public class CategoryAdapter extends RecyclerView.Adapter {
             case "랜덤":
                 ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.random);
                 break;
+            case "추천":
+                ((ViewHolder)holder).imageIcon.setImageResource(R.drawable.recommend);
+                break;
         }
 
         ((ViewHolder)holder).container.setOnClickListener(new View.OnClickListener() {

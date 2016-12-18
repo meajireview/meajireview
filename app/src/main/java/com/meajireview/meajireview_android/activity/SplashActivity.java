@@ -55,30 +55,16 @@ public class SplashActivity extends AppCompatActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 int i= 1;
                 String sql8 = null;
-                Log.e("123",""+list.size());
                 for(ParseObject o : list){
                     Log.e(""+i,""+o.getString("name"));
                     if(o.getBoolean("isdelivery"))
-                    sql8 = "insert into Shop (ID,name,phone,delivery,open,category_name) values ("+i+",'"+o.getString("name")+
-                            "', '"+o.getString("phone")+"',1,'10:30~20:00','"+o.getString("category_name")+"');";
+                        sql8 = "insert into Shop (ID,name,phone,delivery,open,category_name) values ("+i+",'"+o.getString("name")+
+                            "', '"+o.getString("phone")+"',1,'"+o.getString("open")+" ~ "+o.getString("close")+"','"+o.getString("category_name")+"');";
                     else
                         sql8 = "insert into Shop (ID,name,phone,delivery,open,category_name) values ("+i+",'"+o.getString("name")+
-                                "', '"+o.getString("phone")+"',0,'10:30~20:00','"+o.getString("category_name")+"');";
+                                "', '"+o.getString("phone")+"',0,'"+o.getString("open")+" ~ "+o.getString("close")+"','"+o.getString("category_name")+"');";
                     db.execSQL(sql8);
                     i++;
-                }
-            }
-        });
-
-        query = ParseQuery.getQuery("Menu");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-
-                Log.e("123",""+list.size());
-                for(ParseObject o : list){
-                    String sql8 = "insert into Menu (name, price,shop_id) values ('"+o.getString("name")+"', "+o.getInt("price")+", "+ o.getInt("shop_id")+");";
-                    db.execSQL(sql8);
                 }
             }
         });
@@ -123,11 +109,6 @@ public class SplashActivity extends AppCompatActivity {
             String sql6 = "insert into Category(id, category_name) " +
                     "values (6,'술집');";
             db.execSQL(sql6);
-
-            String sql7 = "insert into Category(id, category_name) " +
-                    "values (7,'랜덤');";
-
-            db.execSQL(sql7);
 
             insertDataBase();
 

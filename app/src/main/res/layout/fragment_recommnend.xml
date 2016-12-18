@@ -10,17 +10,53 @@
         android:background="@color/colorSecond"
         android:layout_margin="15dp">
 
-        <LinearLayout
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
         <TextView
+            android:layout_gravity="center"
             android:id="@+id/shopName"
             android:textSize="30dp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:id="@+id/btChagne"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@color/colorSecond">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="메뉴보러가기"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@color/linedivider"/>
+            <FrameLayout
+                android:id="@+id/btCall"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@color/colorSecond">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="전화"/>
+            </FrameLayout>
         </LinearLayout>
         </android.support.v7.widget.CardView>
 

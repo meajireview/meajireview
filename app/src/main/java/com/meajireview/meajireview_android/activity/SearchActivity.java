@@ -18,8 +18,13 @@ import android.widget.TextView;
 import com.meajireview.meajireview_android.R;
 import com.meajireview.meajireview_android.adapter.ShopListAdapter;
 import com.meajireview.meajireview_android.item.ShopInfo;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +60,7 @@ public class SearchActivity extends AppCompatActivity {
     /**
      * List 생성 메소드 <br>
      */
-    private void makeList(String shop) {
+    private void makeList(final String shop) {
         prograssBar.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
@@ -63,14 +68,19 @@ public class SearchActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ArrayList<ShopInfo> shopInfos = new ArrayList<>();
 
-                        //SQL문에서 query를 실행한 결과 넣어두어야 함.
-                        for(int i=0;i<9;i++) {
-                            shopInfos.add(new ShopInfo(0,"둘로스 돈까스", "033-766-3373", "4.5","adsf"));
-                        }
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Shop");
+                        query.whereEqualTo("name",shop);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> list, ParseException e) {
+                                ArrayList<ShopInfo> shopInfos = new ArrayList<>();
+                                for(ParseObject o:list)
+                                  shopInfos.add(new ShopInfo(o.getInt("shop_id"),o.getString("name"), o.getString("phone"), "",o.getString("open")+" ~ "+o.getString("close")));
 
-                        recyclerView.setAdapter(new ShopListAdapter(getApplicationContext(), shopInfos));
+                                recyclerView.setAdapter(new ShopListAdapter(getApplicationContext(), shopInfos));
+                            }
+                        });
 
                         prograssBar.setVisibility(View.GONE);
                     }

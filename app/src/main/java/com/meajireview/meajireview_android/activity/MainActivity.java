@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     /**
      * toolBar 초기화 메소드<br>
      */
@@ -82,29 +81,14 @@ public class MainActivity extends AppCompatActivity {
             if (cursor != null) cursor.close();
         }
 
+        if(ParseUser.getCurrentUser()!=null)
+            items.add(new CategoryItem("랜덤"));
+
+        else
+            items.add(new CategoryItem("추천"));
+
         items.add(new CategoryItem("설정"));
         recyclerView.setAdapter(new CategoryAdapter(getApplicationContext(),items));
-    }
-
-    /**
-     * 드로어 메뉴를 변경하는 메소드<br>
-     * @param menuItem 메뉴 item들
-     * @return true 띄어줌. false 띄우지 않음.
-     */
-    private boolean changeDrawerMenu(MenuItem menuItem) {
-
-        switch (menuItem.getItemId()) {
-            //설정
-            case R.id.setup:
-                Toast.makeText(this, "setup", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(MainActivity.this, SetupActivity.class));
-                return true;
-            case R.id.favorite:
-                Toast.makeText(this, "favorite", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(MainActivity.this, SetupActivity.class));
-                return true;
-        }
-        return true;
     }
 
     @Override

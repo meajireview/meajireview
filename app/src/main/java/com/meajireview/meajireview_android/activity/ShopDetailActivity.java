@@ -22,6 +22,10 @@ import com.meajireview.meajireview_android.SqliteHelper;
 import com.meajireview.meajireview_android.adapter.ShopDetailAdapter;
 import com.meajireview.meajireview_android.item.ShopHeader;
 import com.meajireview.meajireview_android.item.ShopItem;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,13 +66,13 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
      *     가게 관련 정보 및 메뉴 정보
      */
     private void makeContext() {
-        List<ShopItem> shopItems = new ArrayList<>();
+        final List<ShopItem> shopItems = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        ShopHeader shopHeader;
+        final ShopHeader shopHeader;
         if(getIntent()!=null)
             shopHeader = new ShopHeader(getIntent().getIntExtra("shopId",-1),getIntent().getStringExtra("open"),"안함",
                 getIntent().getStringExtra("rating"),getIntent().getStringExtra("phone"), "","");
@@ -79,6 +83,17 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         sqliteHelper = new SqliteHelper(this, DBNAME, null, DBVERSION);
         db = sqliteHelper.getReadableDatabase();
         Cursor cursor = null;
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Menu");
+        query.whereEqualTo("shop_id",getIntent().getIntExtra("shopId",-1));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                for(ParseObject o : list)
+                    shopItems.add(new ShopItem(o.getString("name"),o.getInt("price")+"원"));
+                recyclerView.setAdapter(new ShopDetailAdapter(getApplicationContext(),shopHeader,shopItems));
+            }
+        });
         try {
             cursor = db.rawQuery("select name, price from Menu where shop_id ="+getIntent().getIntExtra("shopId",-1), null);
             while (cursor.moveToNext())
@@ -90,7 +105,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             if (cursor != null) cursor.close();
         }
 
-        recyclerView.setAdapter(new ShopDetailAdapter(getApplicationContext(),shopHeader,shopItems));
+
     }
 
 
@@ -126,18 +141,4 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         finish();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_favorite,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.action_favorite){
-            Toast.makeText(ShopDetailActivity.this, "즐겨찾기", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
