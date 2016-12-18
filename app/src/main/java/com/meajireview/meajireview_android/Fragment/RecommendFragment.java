@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.meajireview.meajireview_android.R;
 
@@ -22,7 +23,12 @@ public class RecommendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parents, Bundle savedInstanceState) {
         FrameLayout container = (FrameLayout)inflater.inflate(R.layout.fragment_recommnend,parents,false);
+        TextView shopName = (TextView)container.findViewById(R.id.shopName);
 
+        Bundle extra = getArguments();
+        String id = extra.getString("category");
+
+        shopName.setText(id);
         return container;
     }
 }

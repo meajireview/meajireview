@@ -53,19 +53,7 @@ public class ShopListAdapter extends RecyclerView.Adapter {
         ((ViewHolder)holder).shopName.setText(info.getShopName());
         ((ViewHolder)holder).shopCall.setText(info.getShopCall());
         ((ViewHolder)holder).shopRating.setText(info.getShopRating());
-        ((ViewHolder)holder).btFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isFavorite) {
-                    ((ViewHolder) holder).btFavorite.setBackgroundResource(R.drawable.heart);
-                    Snackbar.make(((ViewHolder) holder).container, "추가되었습니다.", Snackbar.LENGTH_LONG).show();
-                }
-                else{
-                    ((ViewHolder) holder).btFavorite.setBackgroundResource(R.drawable.unheart);
-                    Snackbar.make(((ViewHolder) holder).container, "제거되었습니다.", Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
+
 
         ((ViewHolder)holder).container.setOnClickListener(new View.OnClickListener()
         {
@@ -92,7 +80,6 @@ public class ShopListAdapter extends RecyclerView.Adapter {
 
         TextView shopName, shopCall, shopRating;
         FrameLayout container;
-        Button btFavorite;
 
         public ViewHolder(View infoView) {
             super(infoView);
@@ -100,7 +87,6 @@ public class ShopListAdapter extends RecyclerView.Adapter {
             shopCall = (TextView) infoView.findViewById(R.id.shopCall);
             shopRating = (TextView) infoView.findViewById(R.id.shopRating);
             container = (FrameLayout) infoView.findViewById(R.id.container);
-            btFavorite = (Button) infoView.findViewById(R.id.btFavorite);
         }
     }
 }
