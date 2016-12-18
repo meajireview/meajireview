@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
+import com.meajireview.meajireview_android.activity.LoginActivity;
 import com.meajireview.meajireview_android.activity.ReviewActivity;
 import com.meajireview.meajireview_android.item.ShopHeader;
 import com.meajireview.meajireview_android.item.ShopItem;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -72,12 +75,20 @@ public class ShopDetailAdapter extends RecyclerView.Adapter {
             ((ViewHeader)holder).txtMyReview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ReviewActivity.class);
-                    intent.putExtra("shopId",shopHeader.getShopId());
-                    intent.putExtra("myRecommend",shopHeader.getMyRecommend());
-                    intent.putExtra("myContent",shopHeader.getMyContent());
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                    if(ParseUser.getCurrentUser()!=null){
+                        Intent intent = new Intent(context, ReviewActivity.class);
+                        intent.putExtra("shopId",shopHeader.getShopId());
+                        intent.putExtra("myRecommend",shopHeader.getMyRecommend());
+                        intent.putExtra("myContent",shopHeader.getMyContent());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);}
+                    else{
+                        Toast.makeText(context, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
                 }
             });
 

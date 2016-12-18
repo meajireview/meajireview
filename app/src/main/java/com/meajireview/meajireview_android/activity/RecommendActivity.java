@@ -39,7 +39,7 @@ public class RecommendActivity extends AppCompatActivity {
     @BindView(R.id.toolBar) Toolbar toolBar;
     @BindView(R.id.viewPager) ViewPager viewPager;
 
-    final int MAX_PAGE = 3;
+    final int MAX_PAGE = 4;
     public Algorithm algorithm;
 
 
@@ -82,7 +82,8 @@ public class RecommendActivity extends AppCompatActivity {
 
                 for(int i=1;i<=3;i++) {
                     results.add(datas.get(lists.size()-i).getContent());
-                    Log.e("asdf",datas.get(lists.size()-i).getContent());
+                    if(i==1)
+                        results.add(datas.get(lists.size()-i).getContent());
                 }
                 viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),results));
             }

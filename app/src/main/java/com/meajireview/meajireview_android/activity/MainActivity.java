@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
+import com.meajireview.meajireview_android.SqliteHelper;
 import com.meajireview.meajireview_android.adapter.CategoryAdapter;
 import com.meajireview.meajireview_android.item.CategoryItem;
 import com.parse.ParseUser;
@@ -34,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolBar) Toolbar toolbar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
-    SQLiteDatabase db;
+    public static SqliteHelper sqliteHelper;
+    private final String DBNAME = "wtfs.db";
+    private final int DBVERSION = 1;
+    public SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         makeList();
 
     }
+
 
     /**
      * toolBar 초기화 메소드<br>
@@ -62,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<CategoryItem> items= new ArrayList<>();
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        db = SplashActivity.sqliteHelper.getReadableDatabase();
+        sqliteHelper = new SqliteHelper(this, DBNAME, null, DBVERSION);
+        db = sqliteHelper.getReadableDatabase();
+
         Cursor cursor = null;
         try {
             cursor = db.rawQuery("select category_name from Category", null);

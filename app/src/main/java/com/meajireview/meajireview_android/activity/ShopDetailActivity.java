@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.meajireview.meajireview_android.R;
+import com.meajireview.meajireview_android.SqliteHelper;
 import com.meajireview.meajireview_android.adapter.ShopDetailAdapter;
 import com.meajireview.meajireview_android.item.ShopHeader;
 import com.meajireview.meajireview_android.item.ShopItem;
@@ -38,7 +39,10 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     @BindView(R.id.fabCall)  FloatingActionButton fabCall;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
-    SQLiteDatabase db;
+    public static SqliteHelper sqliteHelper;
+    private final String DBNAME = "wtfs.db";
+    private final int DBVERSION = 1;
+    public SQLiteDatabase db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +75,9 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         else
             shopHeader = new ShopHeader(-1, "", "", "", "", "", "");
 
-        db = SplashActivity.sqliteHelper.getReadableDatabase();
+
+        sqliteHelper = new SqliteHelper(this, DBNAME, null, DBVERSION);
+        db = sqliteHelper.getReadableDatabase();
         Cursor cursor = null;
         try {
             cursor = db.rawQuery("select name, price from Menu where shop_id ="+getIntent().getIntExtra("shopId",-1), null);

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.meajireview.meajireview_android.R;
+import com.meajireview.meajireview_android.SqliteHelper;
 import com.meajireview.meajireview_android.adapter.ShopListAdapter;
 import com.meajireview.meajireview_android.item.CategoryItem;
 import com.meajireview.meajireview_android.item.ShopInfo;
@@ -27,8 +28,13 @@ public class ShopListActivity extends AppCompatActivity {
     @BindView(R.id.toolBar) Toolbar toolBar;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
 
+    public static SqliteHelper sqliteHelper;
+    private final String DBNAME = "wtfs.db";
+    private final int DBVERSION = 1;
     public SQLiteDatabase db;
+
     String category;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +61,8 @@ public class ShopListActivity extends AppCompatActivity {
      */
     private void makeList() {
         ArrayList<ShopInfo> shopInfos = new ArrayList<>();
-
-        db = SplashActivity.sqliteHelper.getReadableDatabase();
+        sqliteHelper = new SqliteHelper(this, DBNAME, null, DBVERSION);
+        db = sqliteHelper.getReadableDatabase();
         Cursor cursor = null;
         try {
             cursor = db.rawQuery("select id, name, phone, open from Shop where category_name='"+category+"'", null);

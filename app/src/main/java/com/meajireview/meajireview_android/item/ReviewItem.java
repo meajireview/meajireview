@@ -6,7 +6,13 @@ package com.meajireview.meajireview_android.item;
 
 public class ReviewItem {
     boolean rating;
-    String content;
+    String content, reviewer;
+    int shopId;
+
+    public int getShopId() {
+        return shopId;
+    }
+
 
     public boolean getRating() {
         return rating;
@@ -15,9 +21,15 @@ public class ReviewItem {
     public String getContent() {
         return content;
     }
-    public ReviewItem(boolean rating, String content){
+
+    public String getReviewer() {
+        return reviewer;
+    }
+
+    public ReviewItem(int shopId, boolean rating, String content, String reviewer){
+        this.shopId = shopId;
         this.rating = rating;
         this.content = content;
-
+        this.reviewer = reviewer;
     }
 }
