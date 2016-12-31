@@ -81,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
             if (cursor != null) cursor.close();
         }
 
-        if(ParseUser.getCurrentUser()!=null)
-            items.add(new CategoryItem("랜덤"));
-
-        else
             items.add(new CategoryItem("추천"));
 
         items.add(new CategoryItem("설정"));
